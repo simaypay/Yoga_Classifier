@@ -1,4 +1,4 @@
-import math
+nimport math
 import cv2
 import mediapipe as mp
 import pandas as pd
@@ -91,8 +91,8 @@ for foldername in os.listdir(path):
         for filename in os.listdir(folder_path):
             print(filename)
             
-            ext = os.path.splitext(filename.lower())[1]
-            if ext in ['.jpg', '.jpeg', '.png']:
+            end = os.path.splitext(filename.lower())[1]
+            if end in ['.jpg', '.jpeg', '.png']:
         # process the image
 
                 img_path = os.path.join(folder_path, filename)
