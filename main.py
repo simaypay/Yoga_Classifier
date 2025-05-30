@@ -78,7 +78,7 @@ skeleton0= mp.solutions.drawing_utils
 pose=mp_pose.Pose()
 
 cam= cv2.VideoCapture(0)
-
+model= joblib.load("mymodel.pkl")
 while cam.isOpened():
     success , frame = cam.read()
 
@@ -88,15 +88,17 @@ while cam.isOpened():
     landmarks= pose.process(img_rgb)
     (h,w,d)= img_copy.shape
     if landmarks.pose_landmarks:
+
         skeleton0.draw_landmarks(img_copy, landmarks.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
         coords=landmarks.pose_landmarks.landmark
-        standard_coords = [((h*els.x) , (w*els.y), (d* els.z)) for els in coords]
+        
+        standard_coords = [((w*els.x) , (h*els.y), (d* els.z)) for els in coords]
         
         angles= angles_finder(standard_coords)
-        model= joblib.load("model.joblib")
-        prediction=model.predict(angles)
-        print(prediction)
+        
+        prediction=model.predict([angles])
+        print(prediction[0])
     
     cv2.imshow('Camera', img_copy)
 
@@ -109,5 +111,4 @@ while cam.isOpened():
 cam.release()
 
 cv2.destroyAllWindows()
-
 
