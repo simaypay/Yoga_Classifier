@@ -72,18 +72,17 @@ def angles_finder(landmarks):
  #--------------------------------same as dataset creator functions---------------------------------------#
 
 
-ideal_angles = {"Half Moon": [180, 180, 95, 100, 180, 190, 260, 90, 180, 180, 280, 290, 200, 200],
-                "Butterfly": [194, 165, 27, 27, 343, 16, 304, 52, 55, 80, 280, 305, 191, 115],
-                "Downward Dog": [170, 165, 175, 187, 178, 179, 310, 49, 111, 81, 80, 206, 80, 79],
-                "Dancer": [163, 176, 190, 65, 180, 270, 202, 160, 210, 120, 240, 230, 130, 300],
-                "Triangle": [180, 185, 85, 115, 178, 176, 283, 85, 190, 60, 150, 326, 94, 174],
-                "Goddess": [300, 50, 40, 40, 250, 110, 261, 98, 151, 111, 249, 295, 131, 229],
-                "Warrior": [178.93, 179.94, 80, 104.73, 240, 180, 260, 10, 170, 140, 260, 330, 93, 264],
-                "Tree": [129,231, 172, 165, 180, 70, 350, 20, 280, 172, 240, 289, 180, 170]}
+ideal_angles = {"Half Moon": [180, 180, 95, 100, 180, 190, 260, 90, 180, 280, 290, 200, 200],
+                "Butterfly": [194, 165, 27, 27, 343, 16, 304, 52, 80, 280, 305, 191, 115],
+                "Downward Dog": [170, 165, 175, 187, 178, 179, 310, 49, 81, 80, 206, 80, 79],
+                "Dancer": [163, 176, 190, 65, 180, 270, 202, 160, 120, 240, 230, 130, 300],
+                "Triangle": [180, 185, 85, 115, 178, 176, 283, 85, 60, 150, 326, 94, 174],
+                "Goddess": [300, 50, 40, 40, 250, 110, 261, 98, 111, 249, 295, 131, 229],
+                "Warrior": [178.93, 179.94, 80, 104.73, 240, 180, 260, 10, 140, 260, 330, 93, 264],
+                "Tree": [129,231, 172, 165, 180, 70, 350, 20, 172, 240, 289, 180, 170]}
 
-threshold_good = [20, 20, 20, 20, 20, 20, 60, 70, 100, 20, 35, 50, 40, 40]
-threshold_warn = [30, 30, 30, 30, 30, 30, 180, 180, 150, 30, 45, 60, 60, 60]
-# ADAPT VALUES, or make a dictionary (each entry, a pose)
+threshold_good = [20, 20, 20, 20, 20, 20, 60, 70, 20, 35, 50, 40, 40]
+threshold_warn = [30, 30, 30, 30, 30, 30, 180, 180, 30, 45, 60, 60, 60]
 ''' ADAPT VALUES + add to lists '''
 
 
@@ -189,8 +188,7 @@ while cam.isOpened():
                 mp_pose.PoseLandmark.LEFT_KNEE,
                 mp_pose.PoseLandmark.RIGHT_KNEE,
                 mp_pose.PoseLandmark.RIGHT_ANKLE, 
-                mp_pose.PoseLandmark.LEFT_ANKLE,  
-                mp_pose.PoseLandmark.RIGHT_ELBOW,  
+                mp_pose.PoseLandmark.LEFT_ANKLE,   
                 mp_pose.PoseLandmark.LEFT_HIP,
                 mp_pose.PoseLandmark.RIGHT_HIP,
                 mp_pose.PoseLandmark.NOSE,
