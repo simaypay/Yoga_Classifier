@@ -113,6 +113,7 @@ model= joblib.load("mymodel.pkl")
 cam= cv2.VideoCapture(0)
 
 
+frame_no=0
 while cam.isOpened():
     success , frame = cam.read()
     img_rgb= cv2.cvtColor(frame , cv2.COLOR_BGR2RGB)
@@ -126,23 +127,23 @@ while cam.isOpened():
         
         mp_skeleton.draw_landmarks(img_copy, landmarks.pose_landmarks, mp_pose.POSE_CONNECTIONS)
 
-        coords=landmarks.pose_landmarks.landmark  #the coordinates as a list but normalized (0,1)
+        frame_no+=1
+        if frame_no %20 :
+            coords=landmarks.pose_landmarks.landmark  #the coordinates as a list but normalized (0,1)
         
-        standard_coords = [((w*els.x) , (h*els.y), (d* els.z)) for els in coords] #only x,y,z and real coordinates
+            standard_coords = [((w*els.x) , (h*els.y), (d* els.z)) for els in coords] #only x,y,z and real coordinates
         
-        angles= angles_finder(standard_coords) #angles is dataframe to predict 
+            angles= angles_finder(standard_coords) #angles is dataframe to predict 
 
-        #the model prediction
-        prediction=model.predict(angles)
-        print(prediction[0])
+            #the model prediction
+            prediction=model.predict(angles)
+            print(prediction[0])
     
         #feedback down here
-        ideal = ideal_angles[prediction[0]]
+            ideal = ideal_angles[prediction[0]]
 
-        feedback_list = compare_angles(list(angles.iloc[0]), ideal, thresholds_good, thresholds_warn) #angles should be list
-        print(feedback_list)
-
-
+            feedback_list = compare_angles(list(angles.iloc[0]), ideal, thresholds_good, thresholds_warn) #angles should be list
+            print(feedback_list)
 
 
     cv2.imshow('Camera', img_copy)
