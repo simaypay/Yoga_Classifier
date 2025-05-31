@@ -93,7 +93,7 @@ def compare_angles(user_angles, ideal_angles, threshold_good, threshold_warn):
     for i in range(length):
         error = abs(user_angles[i] - ideal_angles[i])
        
-    if error <= threshold_good[i]:
+        if error <= threshold_good[i]:
             feedback = "✅"
         elif error <= threshold_warn[i]:
             feedback = "⚠️"
