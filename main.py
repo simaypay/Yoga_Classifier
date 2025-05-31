@@ -68,7 +68,7 @@ def angles_finder(landmarks):
            "left_hip_angle","right_hip_angle","neck_angle_uk","left_wrist_angle_bk","right_wrist_angle_bk"]
 
     angles_dataframe = pd.DataFrame([angles_list], columns=columns)
-    return angles_dataframe
+    return angles_dataframe , angles_list
  #--------------------------------same as dataset creator functions---------------------------------------#
 
 
@@ -169,10 +169,10 @@ while cam.isOpened():
         
             standard_coords = [((w*els.x) , (h*els.y), (d* els.z)) for els in coords] #only x,y,z and real coordinates
         
-            angles= angles_finder(standard_coords) #angles is dataframe to predict 
+            angles_dataframe, angles= angles_finder(standard_coords) #angles is dataframe to predict 
 
             #the model prediction
-            prediction=model.predict(angles)
+            prediction=model.predict(angles_dataframe)
             #print(prediction[0])
     
         #feedback down here
