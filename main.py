@@ -73,24 +73,44 @@ def angles_finder(landmarks):
  #--------------------------------same as dataset creator functions---------------------------------------#
 
 
-ideal_angles = {"Half_Moon_left": [171.59, 189.31, 98.08, 94.66, 179.63, 183.02, 253.06, 106.74,  121.65, 238.57, 309.07, 83.05, 280.71],
-                "Half_Moon_right":[45.0, 120.0, 90.0, 75.0, 135.0, 160.0, 110.0, 95.0, 85.0, 70.0, 100.0, 140.0, 130.0],
+ideal_angles = {'Butterfly': [180, 180, 10, 5, 342, 18, 305, 55, 77, 283, 306, 0, 0],
+                'Dancer_left': [180, 197, 79, 168, 89, 183, 201, 165, 112, 233, 315, 60, 237],
+                'Dancer_right': [168, 175, 164, 84, 181, 267, 201, 152, 139, 240, 242, 135, 335],
+                'Downward_dog': [167, 167, 174, 186, 180, 180, 340, 20, 80, 79, 300, 80, 80],
+                'Goddess': [166, 193, 91, 87, 241, 118, 262, 99, 112, 249, 296, 132, 229],
+                'Half_Moon_left': [174, 189, 84, 107, 181, 185, 248, 102, 171, 286, 306, 125, 324],
+                'Half_Moon_right': [171, 188, 114, 82, 178, 180, 258, 112, 68, 185, 312, 36, 231],
+                'Tree_left': [304,53,39,25,177,33,5,32,179,248,308,197,147], # arms down
+                'Tree_right': [160, 187, 185, 188, 330, 173, 329, 356, 129, 181, 309, 194, 172], # arms up
+                'Triangle': [166, 188, 93, 121, 177, 175, 278, 91, 58, 143, 319, 65, 167],
+                'Warrior_left': [180, 178, 100, 104, 177, 109, 257, 108, 128, 261, 321, 86, 259],
+                'Warrior_right': [179, 180, 109, 100, 247, 185, 255, 102, 103, 227, 276, 102, 269]}
 
-                "Butterfly": [194.87, 165.46, 32.57, 32.31, 343.11, 17.54, 304.72, 52.07,  74.14, 283.82, 305.93, 191.05, 115.79],
-                "Downward_dog": [168.99, 166.94, 174.86, 187.43, 178.0, 178.97, 310.85, 49.03,  81.51, 80.85, 206.01, 80.67, 79.9],
-                "Dancer_right": [173.19, 182.48, 127.04, 109.22, 146.81, 237.03, 202.31, 156.94,  128.35, 238.7, 281.3, 98.15, 298.18],
-                "Dancer_left":[45.0, 120.0, 90.0, 75.0, 135.0, 160.0, 110.0, 95.0, 85.0, 70.0, 100.0, 140.0, 130.0],
+thresholds_good = {'Butterfly':  [15, 15, 10, 10, 10, 10, 30, 30,  15, 15, 70, 360, 360],
+                'Dancer_left':  [20, 20, 15, 15, 10, 10, 20, 20,  15, 15, 100, 20, 20],
+                'Dancer_right':  [20, 20, 15, 15, 10, 10, 20, 20,  15, 15, 30, 20, 20],
+                'Downward_dog':  [15, 15, 20, 20, 15, 15, 20, 20,  15, 15, 340, 20, 20],
+                'Goddess':  [10, 10, 15, 15, 10, 10, 20, 20,  15, 15, 10, 20, 20],
+                'Half_Moon_left':  [10, 10, 15, 15, 10, 10, 30, 30,  15, 15, 10, 20, 20],
+                'Half_Moon_right':  [10, 10, 15, 15, 10, 10, 30, 30,  15, 15, 10, 20, 20],
+                'Tree_left': [10, 10, 15, 15, 10, 10, 20, 20,  15, 15, 10, 20, 20],
+                'Tree_right':  [10, 10, 15, 15, 10, 10, 20, 20,  15, 15, 10, 20, 20],
+                'Triangle':  [10, 10, 15, 15, 10, 10, 20, 20,  15, 60, 360, 360, 360],
+                'Warrior_left':  [10, 10, 15, 15, 10, 10, 20, 20,  15, 15, 10, 20, 20],
+                'Warrior_right':  [10, 10, 15, 15, 10, 10, 20, 20,  15, 15, 10, 20, 20]} 
 
-                "Triangle": [169.49, 187.7, 87.46, 114.49, 178.95, 176.47, 283.95, 85.0,  54.19, 146.7, 326.85, 94.41, 174.23],
-                "Goddess": [166.89, 192.5, 91.66, 86.3, 242.31, 116.53, 261.62, 98.53,  111.47, 249.03, 295.76, 131.99, 229.02],
-                "Warrior_left": [178.93, 179.94, 104.23, 104.73, 209.99, 143.94, 254.51, 105.94,  115.43, 246.03, 299.39, 93.24, 264.85],
-                "Warrior_right":[45.0, 120.0, 90.0, 75.0, 135.0, 160.0, 110.0, 95.0, 85.0, 70.0, 100.0, 140.0, 130.0],
-
-                "Tree_right": [210.82, 146.19, 124.92, 119.88, 247.84, 128.14, 242.33, 162.3,  150.54, 202.66, 289.07, 192.77, 169.7],
-                "Tree_left":[45.0, 120.0, 90.0, 75.0, 135.0, 160.0, 110.0, 95.0, 85.0, 70.0, 100.0, 140.0, 130.0]}
-
-thresholds_good = [10, 10, 15, 15, 10, 10, 20, 20,  15, 15, 10, 20, 20]   
-thresholds_warn = [20, 20, 25, 25, 20, 20, 30, 30,  25, 25, 20, 30, 30]
+thresholds_warn = {'Butterfly': [25, 25, 20, 20, 20, 20, 40, 40, 25, 25, 80, 370, 370],
+                'Dancer_left': [30, 30, 25, 25, 20, 20, 30, 30, 25, 25, 110, 30, 30],
+                'Dancer_right': [30, 30, 25, 25, 20, 20, 30, 30, 25, 25, 40, 30, 30],
+                'Downward_dog': [25, 25, 30, 30, 25, 25, 30, 30, 25, 25, 350, 30, 30],
+                'Goddess': [20, 20, 25, 25, 20, 20, 30, 30, 25, 25, 20, 30, 30],
+                'Half_Moon_left': [20, 20, 25, 25, 20, 20, 40, 40, 25, 25, 20, 30, 30],
+                'Half_Moon_right': [20, 20, 25, 25, 20, 20, 40, 40, 25, 25, 20, 30, 30],
+                'Tree_left': [20, 20, 25, 25, 20, 20, 30, 30, 25, 25, 20, 30, 30],
+                'Tree_right': [20, 20, 25, 25, 20, 20, 30, 30, 25, 25, 20, 30, 30],
+                'Triangle': [20, 20, 25, 25, 20, 20, 30, 30, 25, 70, 370, 370, 370],
+                'Warrior_left': [20, 20, 25, 25, 20, 20, 30, 30, 25, 25, 20, 30, 30],
+                'Warrior_right': [20, 20, 25, 25, 20, 20, 30, 30, 25, 25, 20, 30, 30]}
 
 def compare_angles(user_angles, ideal_angles, threshold_good, threshold_warn):
     feedback_list = []
@@ -135,20 +155,13 @@ def overlay_emoji(frame, emoji_img, x, y, size=24):
         return  # Emoji won't fit
 
     bgr = emoji_img[:, :, :3]
-    
-    
-        
     alpha = emoji_img[:, :, 3] / 255.0
     
-        
-
     roi = frame[y:y+emoji_h, x:x+emoji_w]
 
     for c in range(3):
         roi[:, :, c] = (alpha * bgr[:, :, c] + (1 - alpha) * roi[:, :, c])
     
-
-
 check_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/check.png", size=(24,24)) # Load all 3 emojis
 warn_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/cross.png", size=(24,24))
 cross_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/warning.png", size=(24,24))
@@ -214,12 +227,11 @@ while cam.isOpened():
             prediction=model.predict(angles_dataframe)
             
 
-        
-
-
             #feedback down here
             ideal_list = ideal_angles[prediction[0]]
-            feedback_list = compare_angles(angles, ideal_list, thresholds_good, thresholds_warn)
+            threshold_good_list = thresholds_good[prediction[0]]
+            threshold_warn_list = thresholds_warn[prediction[0]]
+            feedback_list = compare_angles(angles, ideal_list, threshold_good_list, threshold_warn_list)
 
 
             #cacheing for frame reduction
@@ -247,7 +259,11 @@ while cam.isOpened():
     
             cv2.putText(img_copy, f"Pose: {last_prediction[0]}", (10, 40), cv2.FONT_HERSHEY_DUPLEX, 1.2, (0, 0, 0), 2)
             cv2.putText(img_copy, f"Score: {overall_score:.1f}%", (10, 80), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 2)
-
+            if overall_score == 100:
+                cv2.putText(img_copy, f"PERFECT!", (10, 160), cv2.FONT_HERSHEY_DUPLEX, 2.3, (30, 150, 0), 3)
+            elif overall_score >= 85:
+                cv2.putText(img_copy, f"GOOD!", (10, 160), cv2.FONT_HERSHEY_DUPLEX, 2, (200, 0, 0), 3)
+    
     cv2.imshow("Yoga Pose Feedback", img_copy)
     
     if cv2.waitKey(1) == ord('q'):
