@@ -161,6 +161,28 @@ def overlay_emoji(frame, emoji_img, x, y, size=24):
 
     for c in range(3):
         roi[:, :, c] = (alpha * bgr[:, :, c] + (1 - alpha) * roi[:, :, c])
+
+def score_calculation(feedback_list, pose):
+    # elbow x2, shoulder x2, knee x2, halfmoon x2, hip x2, neck, wrist x2
+    weights = {'Butterfly': [13, 13, 10, 10, 8, 8, 4, 4, 9, 9, 4, 4, 4], # importance (%) of each joint in the overall score 
+                'Dancer_left': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
+                'Dancer_right': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
+                'Downward_dog': [12, 12, 7, 7, 12, 12, 3, 3, 8, 8, 6, 5, 5],
+                'Goddess': [9, 9, 8, 8, 15, 15, 3, 3, 10, 10, 6, 2, 2],
+                'Half_Moon_left': [9, 9, 8, 8, 9, 9, 8, 8, 8, 8, 6, 5, 5],
+                'Half_Moon_right': [9, 9, 8, 8, 9, 9, 8, 8, 8, 8, 6, 5, 5],
+                'Tree_left': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
+                'Tree_right': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
+                'Triangle': [10, 10, 10, 10, 10, 10, 3, 3, 10, 10, 4, 5, 5],
+                'Warrior_left': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
+                'Warrior_right': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4]}
+
+    feedback_values = {"✅": 1.0, "⚠️": 0.3, "❌": 0.0}
+
+    overall_score = 0
+    for i, feedback in enumerate(feedback_list):
+        overall_score += feedback_values[feedback] * weights[pose][i]
+    return overall_score
     
 check_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/check.png", size=(24,24)) # Load all 3 emojis
 warn_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/cross.png", size=(24,24))
@@ -255,7 +277,7 @@ while cam.isOpened():
                 elif feedback == "❌":
                     overlay_emoji(img_copy, cross_img, x, y)
                 
-            overall_score = (last_feedback_list.count("✅") + (last_feedback_list.count("⚠️"))/3) / len(last_feedback_list) * 100
+           overall_score = score_calculation(last_feedback_list, last_prediction[0])
     
             cv2.putText(img_copy, f"Pose: {last_prediction[0]}", (10, 40), cv2.FONT_HERSHEY_DUPLEX, 1.2, (0, 0, 0), 2)
             cv2.putText(img_copy, f"Score: {overall_score:.1f}%", (10, 80), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 0), 2)
