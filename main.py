@@ -147,30 +147,7 @@ def overlay_emoji(frame, emoji_img, x, y, size=24):
     for c in range(3):
         roi[:, :, c] = (alpha * bgr[:, :, c] + (1 - alpha) * roi[:, :, c])
     
-"""
 
-def overlay_emoji(frame, emoji_img, x, y, size=24):
-    x, y = int(x), int(y)
-    emoji_img = cv2.resize(emoji_img, (size, size))
-    h, w = emoji_img.shape[:2]
-
-    if x < 0 or y < 0 or x + w > frame.shape[1] or y + h > frame.shape[0]:
-        return  # Don't draw if out of bounds
-
-    roi = frame[y:y+h, x:x+w]
-
-    if emoji_img.shape[2] == 4:
-        # Handle transparent emoji
-        alpha = emoji_img[:, :, 3] / 255.0
-        for c in range(3):
-            roi[:, :, c] = (alpha * emoji_img[:, :, c] + (1 - alpha) * roi[:, :, c]).astype(np.uint8)
-    else:
-        # Handle non-transparent emoji (fallback)
-        roi[:] = emoji_img[:, :, :3]
-
-    frame[y:y+h, x:x+w] = roi
-
-"""
 
 check_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/check.png", size=(24,24)) # Load all 3 emojis
 warn_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/cross.png", size=(24,24))
@@ -225,28 +202,27 @@ while cam.isOpened():
 
 
         frame_no+=1
+        coords=landmarks.pose_landmarks.landmark  #the coordinates as a list but normalized (0,1)
+        
+        standard_coords = [((w*els.x) , (h*els.y), (d* els.z)) for els in coords] #only x,y,z and real coordinates
 
         if frame_no %20==0 :
 
-            coords=landmarks.pose_landmarks.landmark  #the coordinates as a list but normalized (0,1)
-        
-            standard_coords = [((w*els.x) , (h*els.y), (d* els.z)) for els in coords] #only x,y,z and real coordinates
-        
             angles_dataframe ,angles= angles_finder(standard_coords) #angles is dataframe to predict 
 
-        #the model prediction
+            #the model prediction
             prediction=model.predict(angles_dataframe)
             
 
         
 
 
-        #feedback down here
+            #feedback down here
             ideal_list = ideal_angles[prediction[0]]
             feedback_list = compare_angles(angles, ideal_list, thresholds_good, thresholds_warn)
 
 
-        #cacheing for frame reduction
+            #cacheing for frame reduction
             last_prediction= prediction
             last_feedback_list= feedback_list
             
