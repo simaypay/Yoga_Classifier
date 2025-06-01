@@ -118,6 +118,7 @@ def load_emoji(filename, size=(24, 24)):
     return cv2.resize(emoji, size)
 
 
+
 def overlay_emoji(frame, emoji_img, x, y, size=24):
     frame_h, frame_w = frame.shape[:2]
 
@@ -134,16 +135,42 @@ def overlay_emoji(frame, emoji_img, x, y, size=24):
         return  # Emoji won't fit
 
     bgr = emoji_img[:, :, :3]
+    
+    
         
     alpha = emoji_img[:, :, 3] / 255.0
+    
+        
 
     roi = frame[y:y+emoji_h, x:x+emoji_w]
 
     for c in range(3):
         roi[:, :, c] = (alpha * bgr[:, :, c] + (1 - alpha) * roi[:, :, c])
     
+"""
 
+def overlay_emoji(frame, emoji_img, x, y, size=24):
+    x, y = int(x), int(y)
+    emoji_img = cv2.resize(emoji_img, (size, size))
+    h, w = emoji_img.shape[:2]
 
+    if x < 0 or y < 0 or x + w > frame.shape[1] or y + h > frame.shape[0]:
+        return  # Don't draw if out of bounds
+
+    roi = frame[y:y+h, x:x+w]
+
+    if emoji_img.shape[2] == 4:
+        # Handle transparent emoji
+        alpha = emoji_img[:, :, 3] / 255.0
+        for c in range(3):
+            roi[:, :, c] = (alpha * emoji_img[:, :, c] + (1 - alpha) * roi[:, :, c]).astype(np.uint8)
+    else:
+        # Handle non-transparent emoji (fallback)
+        roi[:] = emoji_img[:, :, :3]
+
+    frame[y:y+h, x:x+w] = roi
+
+"""
 
 check_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/check.png", size=(24,24)) # Load all 3 emojis
 warn_img = load_emoji("/Users/simaypay/Desktop/Yoga_Classifier-main/feedback_images/cross.png", size=(24,24))
@@ -198,6 +225,7 @@ while cam.isOpened():
 
 
         frame_no+=1
+
         if frame_no %20==0 :
 
             coords=landmarks.pose_landmarks.landmark  #the coordinates as a list but normalized (0,1)
@@ -206,9 +234,9 @@ while cam.isOpened():
         
             angles_dataframe ,angles= angles_finder(standard_coords) #angles is dataframe to predict 
 
-            #the model prediction
+        #the model prediction
             prediction=model.predict(angles_dataframe)
-            #print(prediction[0])
+            
 
         
 
