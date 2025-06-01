@@ -73,7 +73,7 @@ def angles_finder(landmarks):
  #--------------------------------same as dataset creator functions---------------------------------------#
 
 
-ideal_angles = {'Butterfly': [180, 180, 10, 5, 342, 18, 305, 55, 77, 283, 306, 0, 0],
+ideal_angles = {'Butterfly': [170, 170, 10, 5, 342, 18, 305, 55, 77, 283, 306, 0, 0],
                 'Dancer_left': [180, 197, 79, 168, 89, 183, 201, 165, 112, 233, 315, 60, 237],
                 'Dancer_right': [168, 175, 164, 84, 181, 267, 201, 152, 139, 240, 242, 135, 335],
                 'Downward_dog': [167, 167, 174, 186, 180, 180, 340, 20, 80, 79, 300, 80, 80],
@@ -164,7 +164,7 @@ def overlay_emoji(frame, emoji_img, x, y, size=24):
 
 def score_calculation(feedback_list, pose):
     # elbow x2, shoulder x2, knee x2, halfmoon x2, hip x2, neck, wrist x2
-    weights = {'Butterfly': [13, 13, 10, 10, 8, 8, 4, 4, 9, 9, 4, 4, 4], # importance (%) of each joint in the overall score 
+    weights = {'Butterfly': [4, 4, 10, 10, 8, 8, 4, 4, 9, 9, 4, 4, 4], # importance (%) of each joint in the overall score 
                 'Dancer_left': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
                 'Dancer_right': [10, 10, 10, 10, 10, 10, 4, 4, 10, 10, 4, 4, 4],
                 'Downward_dog': [12, 12, 7, 7, 12, 12, 3, 3, 8, 8, 6, 5, 5],
