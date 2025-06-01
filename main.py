@@ -118,7 +118,6 @@ def load_emoji(filename, size=(24, 24)):
     return cv2.resize(emoji, size)
 
 
-"""
 def overlay_emoji(frame, emoji_img, x, y, size=24):
     frame_h, frame_w = frame.shape[:2]
 
@@ -135,39 +134,14 @@ def overlay_emoji(frame, emoji_img, x, y, size=24):
         return  # Emoji won't fit
 
     bgr = emoji_img[:, :, :3]
-    
-    if emoji_img.shape[2] == 4:
-        alpha = emoji_img[:, :, 3] / 255.0
-    else:
-        alpha = np.ones((emoji_h, emoji_w))
+        
+    alpha = emoji_img[:, :, 3] / 255.0
 
     roi = frame[y:y+emoji_h, x:x+emoji_w]
 
     for c in range(3):
         roi[:, :, c] = (alpha * bgr[:, :, c] + (1 - alpha) * roi[:, :, c])
-    return frame
-"""
-
-def overlay_emoji(frame, emoji_img, x, y, size=24):
-    x, y = int(x), int(y)
-    emoji_img = cv2.resize(emoji_img, (size, size))
-    h, w = emoji_img.shape[:2]
-
-    if x < 0 or y < 0 or x + w > frame.shape[1] or y + h > frame.shape[0]:
-        return  # Don't draw if out of bounds
-
-    roi = frame[y:y+h, x:x+w]
-
-    if emoji_img.shape[2] == 4:
-        # Handle transparent emoji
-        alpha = emoji_img[:, :, 3] / 255.0
-        for c in range(3):
-            roi[:, :, c] = (alpha * emoji_img[:, :, c] + (1 - alpha) * roi[:, :, c]).astype(np.uint8)
-    else:
-        # Handle non-transparent emoji (fallback)
-        roi[:] = emoji_img[:, :, :3]
-
-    frame[y:y+h, x:x+w] = roi
+    
 
 
 
