@@ -118,7 +118,8 @@ def compare_angles(user_angles, ideal_angles, threshold_good, threshold_warn):
     length = len(user_angles)
     for i in range(length):
         error = abs(user_angles[i] - ideal_angles[i])
-       
+        if error >180:
+            error= 360- error
         if error <= threshold_good[i]:
             feedback = "✅"
         elif error <= threshold_warn[i]:
